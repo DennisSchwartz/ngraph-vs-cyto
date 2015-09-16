@@ -16,16 +16,15 @@ var Layer = Backbone.Model.extend({
         var nodes = this.get("nodes");
         var edges = this.get("edges");
         var nodeCol = new NodeCol();
-
         for (var i=0; i<nodes.length; i++) {
             nodeCol.add(new Node({
                 id: nodes[i].id
             }))
         };
-
         this.set("nodes", nodeCol);
-
-        var edgeCol = new EdgeCol(nodeCol);
+        var edgeCol = new EdgeCol();
+        edgeCol.initialize(nodeCol);
+        console.log(edges[0]);
         for (var i=0; i<edges.length; i++) {
             edgeCol.newEdge(edges[i].src, edges[i].dest);
         }

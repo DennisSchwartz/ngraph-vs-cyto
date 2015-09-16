@@ -10,14 +10,26 @@
 @class cytoscapetest
  */
 
-var Layer = require("./layer")
+var $ = require('jquery');
+var Backbone = require('backbone');
+Backbone.$ = $;
+var Layer = require("./layer");
+var Edge = require("./edge");
+var Node = require("./node");
+var EdgeCol = require("./edgecol");
+var NodeCol = require("./nodecol");
+
 
 var  cytoscapetest;
 module.exports = cytoscapetest = function(opts){
-  this.el = opts.el;
-  var test = new Layer("{{\"id\":1}, {\"id\":2}}", "{{\"src\":1, \"dest\":2}}");
-  test.calculateLayer();
-  this.el.textContent = test.toCytoscape();
+    this.el = opts.el;
+    var nodes = opts.nodes;
+    var edges = opts.edges;
+    console.log("Nodes: " + JSON.stringify(nodes));
+    console.log("Edges: " + JSON.stringify(edges));
+    var test = new Layer(nodes, edges);//'{"id":1}, {"id":2}', '{"src":1, "dest":2}');
+    test.calculateLayer();
+    //this.el.textContent = test.toCytoscape();
 };
 
 /**
