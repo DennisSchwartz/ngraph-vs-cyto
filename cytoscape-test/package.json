@@ -1,0 +1,47 @@
+{
+  "name": "cytoscape-test",
+  "description": "Testing cytoscape for multilayer network viz",
+  "version": "0.1.0",
+  "homepage": "https://github.com/DennisSchwartz/cytoscape-test",
+  "author": {
+    "name": "Dennis Schwartz",
+    "email": "schwartz_dennis@web.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DennisSchwartz/cytoscape-test.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DennisSchwartz/cytoscape-test/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "https://github.com/DennisSchwartz/cytoscape-test/blob/master/LICENSE"
+    }
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+		"test": "echo 'Error: no test specified' && exit 1",
+		"build": "mkdirp build && browserify -r ./:cytoscape-test -o build/test.js",
+		"build-browser": "npm run build",
+		"install": "npm run build",
+		"watch": "watchify -r ./:cytoscape-test -v -o build/test.js",
+		"w": "prunner \"npm run sniper\" \"npm run watch\"",
+		"sniper": "sniper ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+		"mkdirp": "^0.5.0",
+		"browserify": "6.x",
+		"sniper": "0.x",
+		"watchify": "^1.0.6",
+		"prunner": "1.x"
+  }, 
+  "sniper": {
+    "js": [ "/build/test.js"],
+    "snippets": ["examples"],
+    "first": "simple"
+   }, 
+  "keywords": ["biojs"]
+}
