@@ -14,10 +14,11 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
 var Layer = require("./layer");
-var Edge = require("./edge");
+/*var Edge = require("./edge");
 var Node = require("./node");
 var EdgeCol = require("./edgecol");
-var NodeCol = require("./nodecol");
+var NodeCol = require("./nodecol");*/
+var cytoscape = require("cytoscape");
 
 
 var  cytoscapetest;
@@ -29,7 +30,62 @@ module.exports = cytoscapetest = function(opts){
     console.log("Edges: " + JSON.stringify(edges));
     var test = new Layer(nodes, edges);//'{"id":1}, {"id":2}', '{"src":1, "dest":2}');
     test.calculateLayer();
-    this.el.textContent = JSON.stringify(test.toCytoscape());
+    console.log(JSON.stringify(test.toCytoscape()));
+
+
+    this.el.style.left = 0;
+    this.el.style.top = 0;
+    this.el.style.width = "100%";
+    this.el.style.height = "100%";
+    this.el.style.position = "absolute";
+
+
+    var cy = cytoscape({
+        container: this.el,
+        style: cytoscape.stylesheet()
+            .selector('node')
+            .css({
+                'content': 'data(id)'
+            })
+            .selector('edge')
+            .css({
+                'target-arrow-shape': 'triangle',
+                'width': 4,
+                'line-color': '#ddd',
+                'target-arrow-color': '#ddd'
+            })
+            .selector('.highlighted')
+            .css({
+                'background-color': '#61bffc',
+                'line-color': '#61bffc',
+                'target-arrow-color': '#61bffc',
+                'transition-property': 'background-color, line-color, target-arrow-color',
+                'transition-duration': '0.5s'
+            }),
+        elements: test.toCytoscape(),
+        layout: {
+            name: 'breadthfirst',
+            directed: true,
+            roots: '#a',
+            padding: 10
+        }
+    });
+
+/*    var bfs = cy.elements().bfs('#a', function(){}, true);
+
+    var i = 0;
+    var highlightNextEle = function(){
+        bfs.path[i].addClass('highlighted');
+
+        if( i < bfs.path.length ){
+            i++;
+            setTimeout(highlightNextEle, 1000);
+        }
+    };
+
+// kick off first highlight
+    highlightNextEle();
+    */
 };
 
 /**

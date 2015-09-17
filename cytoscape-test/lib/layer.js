@@ -65,7 +65,7 @@ var Layer = Backbone.Model.extend({
                 }
             });
         }
-        return elements;u
+        return elements;
     }
 });
 
