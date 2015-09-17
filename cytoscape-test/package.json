@@ -37,6 +37,8 @@
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
     "mkdirp": "^0.5.1",
+    "ngraph.graph": "0.0.12",
+    "ngraph.three": "0.0.11",
     "prunner": "^1.0.5",
     "require": "^2.4.20",
     "sniper": "^0.2.16",
