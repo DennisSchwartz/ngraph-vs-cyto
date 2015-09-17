@@ -12,11 +12,17 @@ var EdgeCol = Backbone.Collection.extend({
         console.log("Dest: " + dest);
         var node1 = this.nodes.filter(function (x) { return x.id === src })[0]; // This may work?!!
         var node2 = this.nodes.filter(function (x) { return x.id === dest })[0]; // This may work?!!
-        this.add(new Edge({
-            id: node1.id + "-" + node2.id,
-            src: node1,
-            dest: node2
-        }));
+        console.log("Trying to create edge!");
+        var data = {
+            "id": node1.id + "-" + node2.id,
+            "src": node1,
+            "dest": node2
+        }
+        var newEdge = new Edge(data);
+        console.log("Edge created!");;
+        console.log("Data: " + data);
+        //newEdge.initialize(data);
+        this.add(newEdge);
     }
 });
 

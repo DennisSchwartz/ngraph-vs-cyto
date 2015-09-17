@@ -21,10 +21,10 @@ var Layer = Backbone.Model.extend({
                 id: nodes[i].id
             }))
         };
+
         this.set("nodes", nodeCol);
-        var edgeCol = new EdgeCol();
-        edgeCol.initialize(nodeCol);
-        console.log(edges[0]);
+        var edgeCol = new EdgeCol(nodeCol);
+        //edgeCol.initialize();
         for (var i=0; i<edges.length; i++) {
             edgeCol.newEdge(edges[i].src, edges[i].dest);
         }
@@ -52,7 +52,7 @@ var Layer = Backbone.Model.extend({
             });
         }
         var links = this.get("edges");
-        for (var i=0; i<edges.length; i++) {
+        for (var i=0; i<links.length; i++) {
             el = links.at(i);
             elements.push({
                 group: el.get("group"),
@@ -65,7 +65,7 @@ var Layer = Backbone.Model.extend({
                 }
             });
         }
-        return elements;
+        return elements;u
     }
 });
 

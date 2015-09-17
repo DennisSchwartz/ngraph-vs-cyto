@@ -29,7 +29,7 @@ module.exports = cytoscapetest = function(opts){
     console.log("Edges: " + JSON.stringify(edges));
     var test = new Layer(nodes, edges);//'{"id":1}, {"id":2}', '{"src":1, "dest":2}');
     test.calculateLayer();
-    //this.el.textContent = test.toCytoscape();
+    this.el.textContent = JSON.stringify(test.toCytoscape());
 };
 
 /**

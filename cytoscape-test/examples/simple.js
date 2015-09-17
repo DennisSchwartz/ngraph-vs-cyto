@@ -4,3 +4,4 @@ var nodes = [{"id":1}, {"id":2}];
 var edges = [{"src":1, "dest":2}];
 
 var instance = new app({el: rootDiv, nodes: nodes, edges: edges});
+

@@ -12,4 +12,4 @@ var Edge = Backbone.Model.extend({
 
 });
 
-module.exports = Node;
+module.exports = Edge;
