@@ -22,26 +22,43 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-		"test": "echo 'Error: no test specified' && exit 1",
-		"build": "mkdirp build && browserify -r ./:cytoscape-test -o build/test.js",
-		"build-browser": "npm run build",
-		"install": "npm run build",
-		"watch": "watchify -r ./:cytoscape-test -v -o build/test.js",
-		"w": "prunner \"npm run sniper\" \"npm run watch\"",
-		"sniper": "sniper ."
+    "test": "echo 'Error: no test specified' && exit 1",
+    "build": "mkdirp build && browserify -r ./:cytoscape-test -o build/test.js",
+    "build-browser": "npm run build",
+    "install": "npm run build",
+    "watch": "watchify -r ./:cytoscape-test -v -o build/test.js",
+    "w": "prunner \"npm run sniper\" \"npm run watch\"",
+    "sniper": "sniper ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "br-jquery": "0.0.3",
+    "browserify": "^11.1.0",
+    "cytoscape": "^2.4.8",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "mkdirp": "^0.5.1",
+    "prunner": "^1.0.5",
+    "require": "^2.4.20",
+    "sniper": "^0.2.16",
+    "watchify": "^3.4.0"
+  },
   "devDependencies": {
-		"mkdirp": "^0.5.0",
-		"browserify": "6.x",
-		"sniper": "0.x",
-		"watchify": "^1.0.6",
-		"prunner": "1.x"
-  }, 
+    "mkdirp": "^0.5.0",
+    "browserify": "6.x",
+    "sniper": "0.x",
+    "watchify": "^1.0.6",
+    "prunner": "1.x"
+  },
   "sniper": {
-    "js": [ "/build/test.js"],
-    "snippets": ["examples"],
+    "js": [
+      "/build/test.js"
+    ],
+    "snippets": [
+      "examples"
+    ],
     "first": "simple"
-   }, 
-  "keywords": ["biojs"]
+  },
+  "keywords": [
+    "biojs"
+  ]
 }
