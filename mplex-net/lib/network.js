@@ -7,6 +7,5 @@ var Network = Backbone.Model.extend({
         this.nodelayers = data.nodelayers;
         this.edges = data.edges;
         this.aspects = data.aspects;
-
     }
 });

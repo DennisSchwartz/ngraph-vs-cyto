@@ -1,16 +1,12 @@
 var Backbone = require("backbone");
+var Node = require("./node");
+var _ = require("lodash");
 
 var Nodelayer = Backbone.Model.extend({
 
-    initialize: function(data) {
-        this.set("node", data.node);
-        var aspects = data.aspects;
-        console.log("Aspects coming in: " + data.aspects);
-        var layer = {};
-        for (var i=0; i<aspects.length; i++) {
-            layer[i] =  aspects[i]; // For each aspect, add the layer (-> value of the aspect)
-        }
-        this.set("layer", layer);
+    initialize: function(node, aspects) {
+        this.set("node", node);
+        this.set("layer", aspects);
 
     }
 

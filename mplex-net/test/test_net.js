@@ -211,21 +211,17 @@ describe('Node Model', function() {
         it('should have an id as has been set', function() {
            expect(this.node.id).to.equal(this.input.id);
         });
+
+        it('should be an instance of the Node model', function() {
+            expect(this.node).to.be.an.instanceOf(Node);
+        })
     });
 });
 
 describe('Nodelayer module', function (){
     describe('Nodelayer', function() {
         beforeEach(function() {
-            var data = {};
-            data.node = new Node(nodes[0].id);
-            data.aspects = [];
-            var size = _.size(nodes[0].aspects);
-            for (var i=0; i<size; i++) {
-                data.aspects[i] = nodes[0].aspects[i+1];
-            }
-            console.log("Aspects after filling: " + data.aspects);
-            this.nodelayer = new NodeLayer(data);
+            this.nodelayer = new NodeLayer(new Node(nodes[0].id), nodes[0].aspects);
         });
 
         it('should not be undefined', function() {
@@ -233,16 +229,32 @@ describe('Nodelayer module', function (){
         });
 
         it('should contain a node', function() {
-            should.exist(this.nodelayer.get("node"));
+            node = this.nodelayer.get("node");
+            should.exist(node);
+            expect(node).to.be.an.instanceOf(Node);
         });
 
         it('should contain a layer object', function() {
-            should.exist(this.nodelayer.get("layer"));
+            expect(this.nodelayer.get("layer")).not.to.be.undefined;
         });
 
         it('should contain the right layer object', function() {
             var layer = {"1": "now"};
-            should.equal(this.nodelayer.get("layer"), layer);
+            expect(this.nodelayer.get("layer")).to.eql(layer);
         });
     });
+});
+
+
+describe('Edge Module', function() {
+    describe('Edge', function() {
+        beforeEach(function() {
+            this.node1 = new Node(nodes[0].id);
+            this.nodelayer1 = new NodeLayer(this.node1, nodes[0].aspects);
+        })
+
+
+
+
+    })
 });
