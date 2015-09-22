@@ -18,9 +18,14 @@ var Edge = Backbone.Model.extend({
     defaults: {
         group: "edges"
     },
-    initialize: function(src, target, id) {
+    initialize: function(src, target, type, id) {
         this.set("src", src);
         this.set("target", target);
+        if (type === 'directed' || type === 'undirected') {
+            this.set("type", type);
+        } else {
+            this.set("type", 'undirected');
+        }
         if (typeof id != 'undefined') {
             this.set("id", id);
         } else {

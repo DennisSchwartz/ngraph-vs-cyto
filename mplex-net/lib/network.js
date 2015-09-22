@@ -2,10 +2,17 @@ var Backbone = require("backbone");
 
 var Network = Backbone.Model.extend({
 
-    initialize: function(data) {
-        this.nodes = data.nodes;
-        this.nodelayers = data.nodelayers;
-        this.edges = data.edges;
-        this.aspects = data.aspects;
+    // initialize with String from Parser Module
+    initialize: function(nodes, nodelayers, edges, aspects) {
+        // aspects
+        this.aspects = [];
+        var dims = aspects.length;
+        for (var i=0;i<dims;i++) {
+            this.aspects.push(aspects[i]);
+        }
+
+        // nodelayers
+        this.nodelayers = [];
+
     }
 });

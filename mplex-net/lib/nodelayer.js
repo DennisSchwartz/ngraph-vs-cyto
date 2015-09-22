@@ -7,7 +7,6 @@ var Nodelayer = Backbone.Model.extend({
     initialize: function(node, aspects) {
         this.set("node", node);
         this.set("layer", aspects);
-
     }
 
 });

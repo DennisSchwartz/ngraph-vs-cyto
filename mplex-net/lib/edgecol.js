@@ -17,7 +17,7 @@ var EdgeCol = Backbone.Collection.extend({
             "id": node1.id + "-" + node2.id,
             "src": node1.id,
             "dest": node2.id
-        }
+        };
         var newEdge = new Edge(data);
         console.log("Edge created!");;
         console.log("Data: " + data);

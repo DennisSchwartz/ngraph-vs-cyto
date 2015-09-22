@@ -25,170 +25,193 @@ var net = require('../');
 var Node = require('../lib/node');
 var Edge = require('../lib/edge');
 var NodeLayer = require('../lib/nodelayer');
+var Parser = require('../lib/parser');
 
 // mock data for tests:
 
-var aspects = {
-    "Time": [
-        "now",
-        "then"
-    ]
-};
+var aspects = 'Time';
 
-var nodes = [
-    {
-        "id": "1",
-        "aspects": {
-            "1": "now"
-        }
-    },
-    {
-        "id": "2",
-        "aspects": {
-            "1": "now"
-        }
-    },
-    {
-        "id": "3",
-        "aspects": {
-            "1": "now"
-        }
-    },
-    {
-        "id": "4",
-        "aspects": {
-            "1": "now"
-        }
-    },
-    {
-        "id": "1",
-        "aspects": {
-            "1": "then"
-        }
-    },
-    {
-        "id": "2",
-        "aspects": {
-            "1": "then"
-        }
-    },
-    {
-        "id": "3",
-        "aspects": {
-            "1": "then"
-        }
-    },
-    {
-        "id": "4",
-        "aspects": {
-            "1": "then"
-        }
-    }
-];
+//var nodes = [
+//    {
+//        "id": "1",
+//        "aspects": {
+//            "1": "now"
+//        }
+//    },
+//    {
+//        "id": "2",
+//        "aspects": {
+//            "1": "now"
+//        }
+//    },
+//    {
+//        "id": "3",
+//        "aspects": {
+//            "1": "now"
+//        }
+//    },
+//    {
+//        "id": "4",
+//        "aspects": {
+//            "1": "now"
+//        }
+//    },
+//    {
+//        "id": "1",
+//        "aspects": {
+//            "1": "then"
+//        }
+//    },
+//    {
+//        "id": "2",
+//        "aspects": {
+//            "1": "then"
+//        }
+//    },
+//    {
+//        "id": "3",
+//        "aspects": {
+//            "1": "then"
+//        }
+//    },
+//    {
+//        "id": "4",
+//        "aspects": {
+//            "1": "then"
+//        }
+//    }
+//];
 
-var edges = [
-        {
-            "src": {
-                "aspect1": "now",
-                "id": "1"
-            },
-            "dest": {
-                "aspect1": "now",
-                "id": "4"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "now",
-                "id": "2"
-            },
-            "dest": {
-                "aspect1": "now",
-                "id": "3"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "now",
-                "id": "2"
-            },
-            "dest": {
-                "aspect1": "now",
-                "id": "4"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "now",
-                "id": "1"
-            },
-            "dest": {
-                "aspect1": "then",
-                "id": "1"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "now",
-                "id": "2"
-            },
-            "dest": {
-                "aspect1": "then",
-                "id": "2"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "now",
-                "id": "3"
-            },
-            "dest": {
-                "aspect1": "then",
-                "id": "3"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "now",
-                "id": "4"
-            },
-            "dest": {
-                "aspect1": "then",
-                "id": "4"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "then",
-                "id": "1"
-            },
-            "dest": {
-                "aspect1": "then",
-                "id": "2"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "then",
-                "id": "1"
-            },
-            "dest": {
-                "aspect1": "then",
-                "id": "3"
-            }
-        },
-        {
-            "src": {
-                "aspect1": "then",
-                "id": "2"
-            },
-            "dest": {
-                "aspect1": "then",
-                "id": "3"
-            }
-        }
-    ];
+var nodes = 'Time,node\n now,1\n now,2\n now,3\n now,4\n then, 1\n then, 2\n then, 3\n then, 4';
 
+//var edges = [
+//        {
+//            "src": {
+//                "aspect1": "now",
+//                "id": "1"
+//            },
+//            "dest": {
+//                "aspect1": "now",
+//                "id": "4"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "now",
+//                "id": "2"
+//            },
+//            "dest": {
+//                "aspect1": "now",
+//                "id": "3"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "now",
+//                "id": "2"
+//            },
+//            "dest": {
+//                "aspect1": "now",
+//                "id": "4"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "now",
+//                "id": "1"
+//            },
+//            "dest": {
+//                "aspect1": "then",
+//                "id": "1"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "now",
+//                "id": "2"
+//            },
+//            "dest": {
+//                "aspect1": "then",
+//                "id": "2"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "now",
+//                "id": "3"
+//            },
+//            "dest": {
+//                "aspect1": "then",
+//                "id": "3"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "now",
+//                "id": "4"
+//            },
+//            "dest": {
+//                "aspect1": "then",
+//                "id": "4"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "then",
+//                "id": "1"
+//            },
+//            "dest": {
+//                "aspect1": "then",
+//                "id": "2"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "then",
+//                "id": "1"
+//            },
+//            "dest": {
+//                "aspect1": "then",
+//                "id": "3"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "then",
+//                "id": "2"
+//            },
+//            "dest": {
+//                "aspect1": "then",
+//                "id": "3"
+//            }
+//        }
+//    ];
+
+var edges = 'now, 1, now, 4\n now, 2, now, 3\n now, 2, now, 4\n now, 1, then, 1\n now, 2, then, 2\n now, 3, then, 3\n \
+now, 4, then, 4\n then, 1, then, 2\n then, 1, then, 3\n then, 2, then, 3';
+
+before(function() {
+    this.parser = new Parser();
+    this.aspects = this.parser.readAspects(aspects);
+    this.nodes = this.parser.readNodes(nodes);
+    this.edges = this.parser.readEdges(edges);
+    console.log(this.aspects);
+    console.log(this.nodes);
+    console.log(this.edges);
+});
+
+/*
+    Parser
+ */
+
+describe('Parser Module: ', function() {
+   describe('Parser', function() {
+
+       it('should create a csv parser object', function() {
+          expect(this.parser).to.exist();
+       });
+   })
+});
 
 /*
     Node Model
@@ -275,4 +298,26 @@ describe('Edge Module:', function() {
             (this.edge.get('id')).should.eql('1-2');
         });
     })
+});
+
+describe('Network Module:', function() {
+   describe('Network', function() {
+       beforeEach(function(){
+           var parser = new Parser();
+           var data = parser.readCSV(test);
+           //var network = new Network(data.nodes, data.edges, data.aspects);
+       });
+
+       it('should contain nodes as nodelayers', function() {
+
+       });
+
+       it('should contain edges', function() {
+
+       });
+
+       it('should contain the aspects of the network', function() {
+
+       });
+   })
 });
