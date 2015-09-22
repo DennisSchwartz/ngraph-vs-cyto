@@ -18,10 +18,15 @@ var Edge = Backbone.Model.extend({
     defaults: {
         group: "edges"
     },
-    initialize: function(data) {
-        this.set("id", data.id);
-        this.set("src", data.src);
-        this.set("dest", data.dest);
+    initialize: function(src, target, id) {
+        this.set("src", src);
+        this.set("target", target);
+        if (typeof id != 'undefined') {
+            this.set("id", id);
+        } else {
+            id = src.get('node').get('id') + '-' + target.get('node').get('id');
+            this.set("id", id);
+        }
     }
 
 });

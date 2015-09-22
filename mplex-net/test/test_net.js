@@ -23,6 +23,7 @@ var should = chai.should();
 var net = require('../');
 
 var Node = require('../lib/node');
+var Edge = require('../lib/edge');
 var NodeLayer = require('../lib/nodelayer');
 
 // mock data for tests:
@@ -196,8 +197,8 @@ var edges = [
 describe('Node Model', function() {
     describe('Node', function() {
         beforeEach(function() {
-            this.input = {}; this.input.id = 1;
-            this.node = new Node(this.input);
+            this.id = 1;
+            this.node = new Node(this.id);
         });
 
         it('should be created', function() {
@@ -205,11 +206,11 @@ describe('Node Model', function() {
         });
 
         it('should contain an id', function() {
-            should.exist(this.node.id);
+            should.exist(this.node.get('id'));
         });
 
         it('should have an id as has been set', function() {
-           expect(this.node.id).to.equal(this.input.id);
+           expect(this.node.id).to.equal(this.id);
         });
 
         it('should be an instance of the Node model', function() {
@@ -229,7 +230,7 @@ describe('Nodelayer module', function (){
         });
 
         it('should contain a node', function() {
-            node = this.nodelayer.get("node");
+            var node = this.nodelayer.get("node");
             should.exist(node);
             expect(node).to.be.an.instanceOf(Node);
         });
@@ -246,15 +247,32 @@ describe('Nodelayer module', function (){
 });
 
 
-describe('Edge Module', function() {
+describe('Edge Module:', function() {
     describe('Edge', function() {
         beforeEach(function() {
             this.node1 = new Node(nodes[0].id);
             this.nodelayer1 = new NodeLayer(this.node1, nodes[0].aspects);
-        })
+            this.node2 = new Node(nodes[1].id);
+            this.nodelayer2 = new NodeLayer(this.node2, nodes[1].aspects);
+            this.edge = new Edge(this.nodelayer1, this.nodelayer2);
+        });
 
+        it('should contain a src node of type NodeLayer', function() {
+            should.exist(this.edge.get('src'));
+            expect(this.edge.get('src')).to.be.instanceOf(NodeLayer);
+        });
 
+        it('should contain a target node of type NodeLayer', function() {
+            should.exist(this.edge.get('target'));
+            expect(this.edge.get('target')).to.be.instanceOf(NodeLayer);
+        });
 
+        it('should have a defined id', function() {
+            expect(this.edge.get('id')).to.be.defined;
+        });
 
+        it('should assign an id automatically based on the node ids', function() {
+            (this.edge.get('id')).should.eql('1-2');
+        });
     })
 });

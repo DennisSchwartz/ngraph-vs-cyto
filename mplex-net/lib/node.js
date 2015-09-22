@@ -16,8 +16,8 @@ var Backbone = require("backbone");
 
 var Node = Backbone.Model.extend({
 
-    initialize: function(data) {
-        this.set("id", data.id);
+    initialize: function(id) {
+        this.set("id", id);
     }
 
 });
