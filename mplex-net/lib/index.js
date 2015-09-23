@@ -13,7 +13,13 @@
 //var multiplexnet = {};
 module.exports = mplexnet = function(opts) {
 
-        console.log("Hello there!");
+    this.parser = new Parser();
+    this.aspects = this.parser.readAspects(aspects);
+    this.nodes = this.parser.readNodes(nodes);
+    this.edges = this.parser.readEdges(edges);
+    this.network = new Network(this.nodes, this.edges, this.aspects);
+
+    console.log("Hello there!");
 
 };
 

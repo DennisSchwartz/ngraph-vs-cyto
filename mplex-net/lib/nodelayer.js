@@ -3,12 +3,11 @@ var Node = require("./node");
 var _ = require("lodash");
 
 var Nodelayer = Backbone.Model.extend({
-
-    initialize: function(node, aspects) {
+    initialize: function(id, node, layer) {
+        this.set("id", id);
         this.set("node", node);
-        this.set("layer", aspects);
+        this.set("layer", layer);
     }
-
 });
 
 module.exports = Nodelayer;

@@ -23,217 +23,172 @@ var should = chai.should();
 var net = require('../');
 
 var Node = require('../lib/node');
+var NodeCol = require('../lib/nodecol');
 var Edge = require('../lib/edge');
-var NodeLayer = require('../lib/nodelayer');
+var EdgeCol = require('../lib/edgecol');
+var Layer = require('../lib/layer');
+var Nodelayer = require('../lib/nodelayer');
+var Nodelayers = require('../lib/nodelayers');
+var Network = require('../lib/network');
 var Parser = require('../lib/parser');
+var fs = require('fs');
 
 // mock data for tests:
 
-var aspects = 'Time';
+var aspects = fs.readFileSync('./data/Aspects.txt', 'utf8');
+var nodes = fs.readFileSync('./data/Nodes.txt', 'utf8');
+var edges = fs.readFileSync('./data/edges.txt', 'utf8');
 
-//var nodes = [
-//    {
-//        "id": "1",
-//        "aspects": {
-//            "1": "now"
-//        }
-//    },
-//    {
-//        "id": "2",
-//        "aspects": {
-//            "1": "now"
-//        }
-//    },
-//    {
-//        "id": "3",
-//        "aspects": {
-//            "1": "now"
-//        }
-//    },
-//    {
-//        "id": "4",
-//        "aspects": {
-//            "1": "now"
-//        }
-//    },
-//    {
-//        "id": "1",
-//        "aspects": {
-//            "1": "then"
-//        }
-//    },
-//    {
-//        "id": "2",
-//        "aspects": {
-//            "1": "then"
-//        }
-//    },
-//    {
-//        "id": "3",
-//        "aspects": {
-//            "1": "then"
-//        }
-//    },
-//    {
-//        "id": "4",
-//        "aspects": {
-//            "1": "then"
-//        }
-//    }
-//];
 
-var nodes = 'Time,node\n now,1\n now,2\n now,3\n now,4\n then, 1\n then, 2\n then, 3\n then, 4';
+//var nodes = 'Time,node\n now,1\n now,2\n now,3\n now,4\n then, 1\n then, 2\n then, 3\n then, 4';
 
 //var edges = [
 //        {
 //            "src": {
 //                "aspect1": "now",
-//                "id": "1"
+//                "name": "1"
 //            },
 //            "dest": {
 //                "aspect1": "now",
-//                "id": "4"
+//                "name": "4"
 //            }
 //        },
 //        {
 //            "src": {
 //                "aspect1": "now",
-//                "id": "2"
+//                "name": "2"
 //            },
 //            "dest": {
 //                "aspect1": "now",
-//                "id": "3"
-//            }
-//        },
-//        {
-//            "src": {
-//                "aspect1": "now",
-//                "id": "2"
-//            },
-//            "dest": {
-//                "aspect1": "now",
-//                "id": "4"
+//                "name": "3"
 //            }
 //        },
 //        {
 //            "src": {
 //                "aspect1": "now",
-//                "id": "1"
+//                "name": "2"
 //            },
 //            "dest": {
-//                "aspect1": "then",
-//                "id": "1"
+//                "aspect1": "now",
+//                "name": "4"
 //            }
 //        },
 //        {
 //            "src": {
 //                "aspect1": "now",
-//                "id": "2"
+//                "name": "1"
 //            },
 //            "dest": {
 //                "aspect1": "then",
-//                "id": "2"
+//                "name": "1"
 //            }
 //        },
 //        {
 //            "src": {
 //                "aspect1": "now",
-//                "id": "3"
+//                "name": "2"
 //            },
 //            "dest": {
 //                "aspect1": "then",
-//                "id": "3"
+//                "name": "2"
 //            }
 //        },
 //        {
 //            "src": {
 //                "aspect1": "now",
-//                "id": "4"
+//                "name": "3"
 //            },
 //            "dest": {
 //                "aspect1": "then",
-//                "id": "4"
+//                "name": "3"
+//            }
+//        },
+//        {
+//            "src": {
+//                "aspect1": "now",
+//                "name": "4"
+//            },
+//            "dest": {
+//                "aspect1": "then",
+//                "name": "4"
 //            }
 //        },
 //        {
 //            "src": {
 //                "aspect1": "then",
-//                "id": "1"
+//                "name": "1"
 //            },
 //            "dest": {
 //                "aspect1": "then",
-//                "id": "2"
+//                "name": "2"
 //            }
 //        },
 //        {
 //            "src": {
 //                "aspect1": "then",
-//                "id": "1"
+//                "name": "1"
 //            },
 //            "dest": {
 //                "aspect1": "then",
-//                "id": "3"
+//                "name": "3"
 //            }
 //        },
 //        {
 //            "src": {
 //                "aspect1": "then",
-//                "id": "2"
+//                "name": "2"
 //            },
 //            "dest": {
 //                "aspect1": "then",
-//                "id": "3"
+//                "name": "3"
 //            }
 //        }
 //    ];
 
-var edges = 'now, 1, now, 4\n now, 2, now, 3\n now, 2, now, 4\n now, 1, then, 1\n now, 2, then, 2\n now, 3, then, 3\n \
-now, 4, then, 4\n then, 1, then, 2\n then, 1, then, 3\n then, 2, then, 3';
+//var edges = 'now, 1, now, 4\n now, 2, now, 3\n now, 2, now, 4\n now, 1, then, 1\n now, 2, then, 2\n now, 3, then, 3\n \
+//now, 4, then, 4\n then, 1, then, 2\n then, 1, then, 3\n then, 2, then, 3';
 
-before(function() {
-    this.parser = new Parser();
-    this.aspects = this.parser.readAspects(aspects);
-    this.nodes = this.parser.readNodes(nodes);
-    this.edges = this.parser.readEdges(edges);
-    console.log(this.aspects);
-    console.log(this.nodes);
-    console.log(this.edges);
-});
+
 
 /*
-    Parser
+ Parser
  */
 
 describe('Parser Module: ', function() {
-   describe('Parser', function() {
-
-       it('should create a csv parser object', function() {
-          expect(this.parser).to.exist();
-       });
-   })
+    before(function () {
+        this.parser = new Parser();
+        this.aspects = this.parser.readAspects(aspects);
+        this.nodes = this.parser.readNodes(nodes);
+        this.edges = this.parser.readEdges(edges);
+    });
+    describe('Parser', function() {
+        it('should create a csv parser object', function() {
+            expect(this.parser).to.exist;
+        });
+    })
 });
 
 /*
-    Node Model
-  */
+ Node Model
+ */
 
 describe('Node Model', function() {
     describe('Node', function() {
         beforeEach(function() {
-            this.id = 1;
-            this.node = new Node(this.id);
+            this.name = 1;
+            this.node = new Node(this.name);
         });
 
         it('should be created', function() {
             should.exist(this.node);
         });
 
-        it('should contain an id', function() {
-            should.exist(this.node.get('id'));
+        it('should contain a name', function() {
+            should.exist(this.node.get('name'));
         });
 
-        it('should have an id as has been set', function() {
-           expect(this.node.id).to.equal(this.id);
+        it('should have a name as has been set', function() {
+            expect(this.node.get("name")).to.equal(this.name);
         });
 
         it('should be an instance of the Node model', function() {
@@ -244,8 +199,14 @@ describe('Node Model', function() {
 
 describe('Nodelayer module', function (){
     describe('Nodelayer', function() {
-        beforeEach(function() {
-            this.nodelayer = new NodeLayer(new Node(nodes[0].id), nodes[0].aspects);
+        before(function () {
+            this.parser = new Parser();
+            this.aspects = this.parser.readAspects(aspects);
+            this.nodes = this.parser.readNodes(nodes);
+            this.edges = this.parser.readEdges(edges);
+            this.node = new Node(this.nodes[0].name);
+            this.layer = new Layer(this.aspects, this.nodes[0]);
+            this.nodelayer = new Nodelayer(this.nodes[0].id, this.node, this.layer);
         });
 
         it('should not be undefined', function() {
@@ -263,8 +224,8 @@ describe('Nodelayer module', function (){
         });
 
         it('should contain the right layer object', function() {
-            var layer = {"1": "now"};
-            expect(this.nodelayer.get("layer")).to.eql(layer);
+            var layer = this.nodelayer.get("layer");
+            expect(layer.get("Time")).to.eql("now");
         });
     });
 });
@@ -272,52 +233,61 @@ describe('Nodelayer module', function (){
 
 describe('Edge Module:', function() {
     describe('Edge', function() {
-        beforeEach(function() {
-            this.node1 = new Node(nodes[0].id);
-            this.nodelayer1 = new NodeLayer(this.node1, nodes[0].aspects);
-            this.node2 = new Node(nodes[1].id);
-            this.nodelayer2 = new NodeLayer(this.node2, nodes[1].aspects);
+        before(function() {
+            this.parser = new Parser();
+            this.aspects = this.parser.readAspects(aspects);
+            this.nodes = this.parser.readNodes(nodes);
+            this.edges = this.parser.readEdges(edges);
+            this.node1 = new Node(this.nodes[0].name);
+            this.layer1 = new Layer(this.aspects, this.nodes[0]);
+            this.nodelayer1 = new Nodelayer(this.nodes[0].id, this.node1, this.layer1);
+            this.node2 = new Node(this.nodes[1].name);
+            this.layer2 = new Layer(this.aspects, this.nodes[1]);
+            this.nodelayer2 = new Nodelayer(this.nodes[1].id, this.node2, this.layer2);
             this.edge = new Edge(this.nodelayer1, this.nodelayer2);
         });
 
-        it('should contain a src node of type NodeLayer', function() {
+        it('should contain a src node of type Nodelayer', function() {
             should.exist(this.edge.get('src'));
-            expect(this.edge.get('src')).to.be.instanceOf(NodeLayer);
+            expect(this.edge.get('src')).to.be.instanceOf(Nodelayer);
         });
 
-        it('should contain a target node of type NodeLayer', function() {
+        it('should contain a target node of type Nodelayer', function() {
             should.exist(this.edge.get('target'));
-            expect(this.edge.get('target')).to.be.instanceOf(NodeLayer);
+            expect(this.edge.get('target')).to.be.instanceOf(Nodelayer);
         });
 
-        it('should have a defined id', function() {
-            expect(this.edge.get('id')).to.be.defined;
+        it('should have a defined name', function() {
+            expect(this.edge.get('name')).to.be.defined;
         });
 
-        it('should assign an id automatically based on the node ids', function() {
+        it('should assign an name automatically based on the node ids', function() {
             (this.edge.get('id')).should.eql('1-2');
         });
     })
 });
 
 describe('Network Module:', function() {
-   describe('Network', function() {
-       beforeEach(function(){
-           var parser = new Parser();
-           var data = parser.readCSV(test);
-           //var network = new Network(data.nodes, data.edges, data.aspects);
-       });
+    describe('Network', function() {
+        beforeEach(function(){
+            this.parser = new Parser();
+            this.aspects = this.parser.readAspects(aspects);
+            this.nodes = this.parser.readNodes(nodes);
+            this.edges = this.parser.readEdges(edges);
+            this.network = new Network(this.nodes, this.edges, this.aspects);
+        });
 
-       it('should contain nodes as nodelayers', function() {
+        it('should contain nodes as nodelayers', function() {
+            expect(this.network.nodelayers).to.be.an.instanceof(Nodelayers);
+        });
 
-       });
+        it('should contain edges', function() {
+            expect(this.network.edges).to.be.defined;
+            expect(this.network.edges).to.be.an.instanceof(EdgeCol);
+        });
 
-       it('should contain edges', function() {
-
-       });
-
-       it('should contain the aspects of the network', function() {
-
-       });
-   })
+        it('should contain the aspects of the network', function() {
+            expect(this.network.aspects).to.be.defined;
+        });
+    })
 });

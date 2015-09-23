@@ -13,6 +13,8 @@
 
 
 var Backbone = require("backbone");
+var Node = require("./node");
+var _ = require("lodash");
 
 var Edge = Backbone.Model.extend({
     defaults: {
@@ -29,7 +31,7 @@ var Edge = Backbone.Model.extend({
         if (typeof id != 'undefined') {
             this.set("id", id);
         } else {
-            id = src.get('node').get('id') + '-' + target.get('node').get('id');
+            id = _(src).get('id') + '-' + _(target).get('id');
             this.set("id", id);
         }
     }
