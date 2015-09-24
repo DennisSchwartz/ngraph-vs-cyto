@@ -1,5 +1,5 @@
 {
-  "name": "mplex-net",
+  "name": "mplexnet",
   "description": "A model for Multilayer/Conplex Networks",
   "version": "0.1.0",
   "homepage": "https://github.com/DennisSchwartz/mplex-net",
@@ -20,7 +20,7 @@
       "url": "https://github.com/DennisSchwartz/mplex-net/blob/master/LICENSE"
     }
   ],
-  "main": "lib/index.js",
+  "main": "lib/mplexnet.js",
   "scripts": {
     "test": "mocha",
     "build": "mkdirp build && browserify -r ./:mplex-net -o build/net.js",

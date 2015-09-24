@@ -9,7 +9,7 @@ var Nodelayers = require("./nodelayers");
 var _ = require('lodash');
 
 
-var Network = Backbone.Model.extend({
+var Mplexnet = Backbone.Model.extend({
 
     // initialize with String from Parser Module
     initialize: function(nodes, edges, aspects) {
@@ -71,4 +71,4 @@ var Network = Backbone.Model.extend({
     }
 });
 
-module.exports = Network;
+module.exports = Mplexnet;
